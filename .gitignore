@@ -1,0 +1,7 @@
+# my sampled images
+samples_stylegan2_celebhq25
+
+# log files
+*.out
+
+*__pycache__
