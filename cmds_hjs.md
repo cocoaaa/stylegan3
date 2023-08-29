@@ -97,7 +97,7 @@ export seed_start=$((run_id*batch_size))
 export seed_last=$((seed_start + batch_size-1))
 export outdir=samples_stylegan2_celebhq25
 
-nohup python gen_images.py --outdir=$outdir --trunc=1 "--seeds=$seed_start-$seed_last" \
+nohup python gen_images.py --outdir$outdir --trunc=1 "--seeds=$seed_start-$seed_last" \
     --network=https://api.ngc.nvidia.com/v2/models/nvidia/research/stylegan2/versions/1/files/stylegan2-celebahq-256x256.pkl \
     > "log$run_id.out" 2>&1 &
 #### Progress:
@@ -112,9 +112,33 @@ nohup python gen_images.py --outdir=$outdir --trunc=1 "--seeds=$seed_start-$seed
 
 - [ ] add two more arguments to `gen_images.py` to set `seed_start` and `n_samples`
 
+# Generat sampes fomffhq256 pretrained network (stylegan2, treaind on ffhq256)
+
+## Log of cmmands I ran:
+workdir=#todo
+cd $worksdir
+conda activate test
+
+export batch_size=5000 
+export outdir=./samples_stylegan2_ffhq256
 
 
+### run0: start=0, end=20k-1
+export run_id=stylegan2-ffhq256-run0
+export seed_start=0
+export seed_last=$((seed_start + batch_size-1))
 
+export CUDA_VISIBLE_DEVICES=0
+
+nohup python gen_images.py --outdir $outdir --trunc 1 --seeds 0-5000 \
+--network=https://api.ngc.nvidia.com/v2/models/nvidia/research/stylegan2/versions/1/files/stylegan2-ffhq-256x256.pkl \
+> "log-$run_id.out" 2>&1  &
+
+
+#### Progress:
+- started: 20230828-231445
+- status: running
+- pid: [1] 18861
 
 
 

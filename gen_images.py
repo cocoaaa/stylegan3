@@ -136,6 +136,8 @@ def generate_images(
         img = (img.permute(0, 2, 3, 1) * 127.5 + 128).clamp(0, 255).to(torch.uint8)
         PIL.Image.fromarray(img[0].cpu().numpy(), 'RGB').save(f'{outdir}/seed{seed:07d}.png')
 
+        if (seed_idx+1) % 100 == 0:
+            print(seed_idx, end='...')
 
 #----------------------------------------------------------------------------
 
