@@ -23,11 +23,11 @@ conda activate taming
 model_name=stylegan2-ffhq256
 run_id=test #20230904-190201
 ckpt_fp=https://api.ngc.nvidia.com/v2/models/nvidia/research/stylegan2/versions/1/files/stylegan2-ffhq-256x256.pkl
-outdir=Generated-Images-$model_name-$run_id
+# outdir=./samples-$model_name-$run_id
+outdir=./Generated-Images-$model_name-$run_id
 echo $outdir
 
-python gen_images.py --outdir=$outdir --trunc=1 --seeds=2 \
-    --network=$ckpt_fp
+CUDA_VISIBLE_DEVICES=0 python gen_images.py --outdir=$outdir --trunc=1 --seeds=2  --network=$ckpt_fp
 
 ```
 
@@ -43,24 +43,63 @@ python gen_images.py --outdir=$outdir --trunc=1 "--seeds=$seed_start-$seed_last"
     --network=$ckpt_fp 
 ```
 
-## Run0: start=0, end=20k-1
+## Run0: start=0, end=50k-1
 ```shell
 #loging to a compute node
-jid=410924
-srun --jobid=$jid  --pty /usr/bin/bash
-conda activate taming
-
+# jid=410924
+# srun --jobid=$jid  --pty /usr/bin/bash
+# conda activate taming
 #sampling
-export batch_size=20000 
-export run_id=0
+export nsamples=50000 
+export run_id=20230904-201921
 export seed_start=0
-export seed_last=$((seed_start + batch_size-1))
+export seed_last=$((seed_start + nsamples-1))
+ckpt_fp=https://api.ngc.nvidia.com/v2/models/nvidia/research/stylegan2/versions/1/files/stylegan2-ffhq-256x256.pkl
+outdir=./Generated-Images-$model_name-$run_id
+echo $outdir
 
+
+CUDA_VISIBLE_DEVICES=0 
 nohup python gen_images.py --outdir=$outdir --trunc=1 "--seeds=$seed_start-$seed_last" \
     --network=$ckpt_fp &
 
 ```
 
 ### Progress:
-- started: 
-- pid:
+- status: #running
+- started: 20230904-202055
+- pid: 8781
+- gpu: 0
+- outdir: /data/hayley-old/Github/GANs/stylegan3/Generated-Images-stylegan2-ffhq256-test
+
+
+
+## Run: stylegan3: start=0, end=50k-1
+```shell
+#loging to a compute node
+# jid=410924
+# srun --jobid=$jid  --pty /usr/bin/bash
+# conda activate taming
+
+#sampling
+model_name=stylegan3-r-ffhqu-256
+ckpt_fp=https://api.ngc.nvidia.com/v2/models/nvidia/research/stylegan3/versions/1/files/stylegan3-r-ffhqu-256x256.pkl
+nsamples=50000 
+run_id=20230904-202700
+seed_start=0
+seed_last=$((seed_start + nsamples-1))
+outdir=./Generated-Images-$model_name-$run_id
+echo $outdir
+
+
+CUDA_VISIBLE_DEVICES=1
+nohup python gen_images.py --outdir=$outdir --trunc=1 "--seeds=$seed_start-$seed_last"  --network=$ckpt_fp &
+
+```
+
+### Progress:
+- status: #running
+- started: 20230904-203036 
+- pid: 11289
+- gpu: 1
+- outdir: /data/hayley-old/Github/GANs/stylegan3/Generated-Images-stylegan3-r-ffhqu-256-20230904-202700
