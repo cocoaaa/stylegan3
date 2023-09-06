@@ -43,7 +43,7 @@ python gen_images.py --outdir=$outdir --trunc=1 "--seeds=$seed_start-$seed_last"
     --network=$ckpt_fp 
 ```
 
-## Run0: start=0, end=50k-1
+## Run: stylegan2 trained on ffhq256; sample total 50k images 
 ```shell
 #loging to a compute node
 # jid=410924
@@ -74,7 +74,7 @@ nohup python gen_images.py --outdir=$outdir --trunc=1 "--seeds=$seed_start-$seed
 
 
 
-## Run: stylegan3: start=0, end=50k-1
+## Run: stylegan3, trained on ffhq256; sample total 50k
 ```shell
 #loging to a compute node
 # jid=410924
@@ -85,21 +85,21 @@ nohup python gen_images.py --outdir=$outdir --trunc=1 "--seeds=$seed_start-$seed
 model_name=stylegan3-r-ffhqu-256
 ckpt_fp=https://api.ngc.nvidia.com/v2/models/nvidia/research/stylegan3/versions/1/files/stylegan3-r-ffhqu-256x256.pkl
 nsamples=50000 
-run_id=20230904-202700
+run_id=20230905-175443
 seed_start=0
 seed_last=$((seed_start + nsamples-1))
 outdir=./Generated-Images-$model_name-$run_id
 echo $outdir
 
 
-CUDA_VISIBLE_DEVICES=1
+CUDA_VISIBLE_DEVICES=0
 nohup python gen_images.py --outdir=$outdir --trunc=1 "--seeds=$seed_start-$seed_last"  --network=$ckpt_fp &
 
 ```
 
 ### Progress:
 - status: #running
-- started: 20230904-203036 
-- pid: 11289
-- gpu: 1
-- outdir: /data/hayley-old/Github/GANs/stylegan3/Generated-Images-stylegan3-r-ffhqu-256-20230904-202700
+- started: 
+- pid: 24580
+- gpu: 0
+- outdir: /data/hayley-old/Github/GANs/stylegan3/Generated-Images-stylegan3-r-ffhqu-256-????
